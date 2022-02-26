@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { List } from "react-native-paper";
-import styled from "styled-components";
 
 import { RestaurantInfoCard } from "../../components/restaurant-info-card.component";
 import { SafeView } from "../../../components/utils/safe-area.component";
