@@ -10,7 +10,7 @@ import { SafeView } from "../../components/utils/safe-area.component";
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
-  RestaurantsNavigator: "restaurant",
+  Restaurants: "restaurant",
   Map: "map",
   Settings: "ios-settings",
 };
@@ -47,11 +47,7 @@ export const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen
-          name="RestaurantsNavigator"
-          component={RestaurantsNavigator}
-          options={{ title: "Restaurants" }}
-        />
+        <Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
