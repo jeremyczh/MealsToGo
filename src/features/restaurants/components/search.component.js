@@ -15,8 +15,6 @@ export const Search = ({ isFavouritesToggled, onFavouritesToggle }) => {
     setSearchKeyword(keyword);
   }, [keyword]);
 
-  console.log(isFavouritesToggled);
-
   return (
     <SearchbarContainer>
       <Searchbar
