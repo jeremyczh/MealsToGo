@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import {
@@ -8,7 +9,8 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 
 import firebase from "firebase/compat/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeAuth } from "firebase/auth";
+import { getReactNativePersistence } from "firebase/auth/react-native";
 
 import { theme } from "./src/infrastructure/theme";
 import { RestaurantsContextProvider } from "./src/services/restaurants/restaurants.context";
@@ -27,23 +29,12 @@ const firebaseConfig = {
   measurementId: "G-N3SM96HP73",
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAuth = initializeAuth(firebaseApp, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      signInWithEmailAndPassword(auth, "jeremyczh@gmail.com", "test123")
-        .then((user) => {
-          console.log(user);
-          setIsAuthenticated(true);
-        })
-        .catch((e) => console.log(e));
-    }, 2000);
-  }, []);
-
   let [oswaldLoaded] = useOswald({ Oswald_400Regular });
   let [latoLoaded] = useLato({ Lato_400Regular });
 
@@ -51,12 +42,10 @@ export default function App() {
     return null;
   }
 
-  if (!isAuthenticated) return null;
-
   return (
     <>
       <ThemeProvider theme={theme}>
-        <AuthenticationContextProvider>
+        <AuthenticationContextProvider auth={firebaseAuth}>
           <FavouritesContextProvider>
             <LocationContextProvider>
               <RestaurantsContextProvider>

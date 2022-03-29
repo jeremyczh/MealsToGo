@@ -1,6 +1,5 @@
-import firebase from "firebase/compat/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-const loginRequest = (app, email, password) => {
-  signInWithEmailAndPassword(getAuth(app), email, password);
+export const loginRequest = (auth, email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
 };
